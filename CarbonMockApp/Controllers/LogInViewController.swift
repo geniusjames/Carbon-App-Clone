@@ -10,8 +10,13 @@ import UIKit
 class LogInViewController: UIViewController {
     
     let stringResources = StringsFile()
+    var delegate: createViewDelegate?
+
     let grayColor = UIColor(red: 243/255, green: 243/255, blue: 243/255, alpha: 1)
     let purpleColor = UIColor(red: 67/255, green: 1/255, blue: 192/255, alpha: 1)
+    
+    var customerProfile: [String : String] = [:]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -21,7 +26,9 @@ class LogInViewController: UIViewController {
         view.addSubview(phoneNumberInputField)
         view.addSubview(pinLabel)
         view.addSubview(pinInputField)
+        view.addSubview(validationLabel)
         setUpViews()
+        validation()
         // Do any additional setup after loading the view.
     
     }
@@ -82,6 +89,7 @@ class LogInViewController: UIViewController {
         textField.backgroundColor = grayColor
         textField.layer.cornerRadius = 7
         textField.textAlignment = .left
+        textField.isSecureTextEntry = true
         
         let label = UILabel()
         label.text = "forgot password"
@@ -112,13 +120,20 @@ class LogInViewController: UIViewController {
         label.text = "PIN"
         return label
     }()
+    lazy var validationLabel: UILabel = {
+        let label = UILabel()
+        label.text = ""
+        label.textColor = .red
+        label.isHidden = true
+        return label
+    }()
     
     func setUpViews(){
         let screenSize = UIScreen.main.bounds
         let height = screenSize.height
-        let width = screenSize.width
+
         carbonImage.translatesAutoresizingMaskIntoConstraints = false
-        carbonImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
+        carbonImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50).isActive = true
         carbonImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         carbonImage.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3).isActive = true
         carbonImage.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1).isActive = true
@@ -148,7 +163,45 @@ class LogInViewController: UIViewController {
         pinInputField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         pinInputField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         pinInputField.heightAnchor.constraint(equalToConstant: height * 0.07).isActive = true
-
+        
+        validationLabel.translatesAutoresizingMaskIntoConstraints = false
+        validationLabel.topAnchor.constraint(equalTo: pinInputField.bottomAnchor, constant: 30).isActive = true
+        validationLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    }
+    
+    @objc func loginValidation(){
+        let key = phoneNumberInputField.text
+        let passwordDict = UserDefaults.standard.dictionary(forKey: key ?? "")
+        print(passwordDict)
+        let password = passwordDict?["pin"] as? String
+        if pinInputField.text == password{
+            beginTask()
+        }
+        else{
+            validationLabel.text = "Incorrect Phone Number or Password"
+            validationLabel.isHidden = false
+        }
+    }
+    @objc func check(){
+        let userPin: String = pinInputField.text ?? ""
+        if userPin.count < 4{
+            validationLabel.isHidden = true
+        }
+        if userPin.count == 4{
+            loginValidation()
+        }
+        if userPin.count > 4{
+            validationLabel.text = "PIN must be 4 digits"
+            validationLabel.isHidden = false
+        }
+        
+    }
+    func validation(){
+        pinInputField.addTarget(self, action: #selector(check), for: UIControl.Event.editingChanged)
+    }
+    
+    @objc func beginTask(){
+    delegate?.begin(view: "profile")
     }
 }
 

@@ -55,11 +55,11 @@ class OnBoardingViewController: UIViewController, UICollectionViewDelegate, UICo
            if indexPath.row == 0 || indexPath.row == 1{
                
                    self.navigationTitle = "Skip"
-                   self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: self.navigationTitle, style: .plain, target: self, action: #selector(self.beginLogin))
+                   self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: self.navigationTitle, style: .plain, target: self, action: #selector(self.beginRegistration))
                    self.reloadInputViews()
                } else {
                    self.navigationTitle = "Sign in"
-                   self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: self.navigationTitle, style: .plain, target: self, action: #selector(self.beginRegistration) )
+                   self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: self.navigationTitle, style: .plain, target: self, action: #selector(self.beginLogin) )
                    self.reloadInputViews()
            }
         print(indexPath.row)

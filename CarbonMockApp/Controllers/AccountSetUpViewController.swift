@@ -8,9 +8,9 @@
 import Foundation
 import UIKit
 
-class AccountSetUp: UIViewController{
+class AccountSetUpViewController: UIViewController{
     
-    
+    var valid: Bool = false
     var selectedCountryCode: String?
     var selectedGender: String?
     var countryCodesTextField: UITextField?
@@ -23,33 +23,99 @@ class AccountSetUp: UIViewController{
         self.navigationItem.title = "Create your Carbon account"
         super.viewDidLoad()
         view.backgroundColor = .white
-        view.addSubview(setUpHeader)
-        view.addSubview(firstNameLabel)
-        view.addSubview(firstNameInputField)
-        view.addSubview(surnameLabel)
-        view.addSubview(surnameInputField)
-        view.addSubview(middleNameLabel)
-        view.addSubview(middleNameInputField)
-        view.addSubview(dateOfBirthLabel)
-        view.addSubview(dateOfBirthInputField)
-        view.addSubview(genderLabel)
-        view.addSubview(genderPicker)
-        view.addSubview(phoneNumberLabel)
-        view.addSubview(phoneNumberInputField)
-        view.addSubview(createAccountButton)
-        view.addSubview(termsAndConditionsLabel)
+        scrollView.backgroundColor = .white
+        view.addSubview(scrollView)
+        view.addSubview(validationLabel)
+        scrollView.addSubview(setUpHeader)
+        scrollView.addSubview(firstNameLabel)
+        scrollView.addSubview(firstNameInputField)
+        scrollView.addSubview(surnameLabel)
+        scrollView.addSubview(surnameInputField)
+        scrollView.addSubview(middleNameLabel)
+        scrollView.addSubview(middleNameInputField)
+        scrollView.addSubview(dateOfBirthLabel)
+        scrollView.addSubview(dateOfBirthInputField)
+        scrollView.addSubview(genderLabel)
+        scrollView.addSubview(genderPicker)
+        scrollView.addSubview(phoneNumberLabel)
+        scrollView.addSubview(phoneNumberInputField)
+        scrollView.addSubview(pinLabel)
+        scrollView.addSubview(pinInputField)
+        scrollView.addSubview(emailLabel)
+        scrollView.addSubview(emailInputField)
+        scrollView.addSubview(createAccountButton)
+        scrollView.addSubview(termsAndConditionsLabel)
+        //        scrollView.addSubview(validationLabel)
         setUpViews()
         createPickerView()
         createDatePicker()
         dismissAndClose()
+        validation()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 200)
+    }
+    lazy var scrollView: UIScrollView = {
+        let sv = UIScrollView()
+        sv.backgroundColor = .white
+        sv.translatesAutoresizingMaskIntoConstraints = false
+        sv.bounces = true
+        return sv
+    }()
+    
+    func saveAccount(){
+        var customerDetails: [String:String] = [:]
+        customerDetails["first_name"] = firstNameInputField.text
+        customerDetails["middle_name"] = middleNameInputField.text
+        customerDetails["surname"] = surnameInputField.text
+        customerDetails["date_of_birth"] = dateOfBirthInputField.text
+        customerDetails["gender"] = genderPicker.text
+        customerDetails["phone_number"] = phoneNumberInputField.text
+        customerDetails["country"] = countryCodesTextField?.text
+        customerDetails["pin"] = pinInputField.text
+        customerDetails["email"] = emailInputField.text
         
+        let key = phoneNumberInputField.text ?? "credentials"
+        UserDefaults.standard.set(customerDetails, forKey: key)
+        UserDefaults.standard.set(key, forKey: "new_user_key")
+        
+        //sets onBoarded validation
+        UserDefaults.standard.set(true, forKey: "onboarded")
+    }
+    func validation(){
+        phoneNumberInputField.addTarget(self, action: #selector(textFieldDidChange), for: UIControl.Event.editingChanged)
+        genderPicker.addTarget(self, action: #selector(textFieldDidChange), for: UIControl.Event.editingChanged)
+        firstNameInputField.addTarget(self, action: #selector(textFieldDidChange), for: UIControl.Event.editingChanged)
+        surnameInputField.addTarget(self, action: #selector(textFieldDidChange), for: UIControl.Event.editingChanged)
+        pinInputField.addTarget(self, action: #selector(textFieldDidChange), for: UIControl.Event.editingChanged)
+        
+        
+    }
+    @objc   func textFieldDidChange() {
+        
+        if firstNameInputField.text!.isEmpty || surnameInputField.text!.isEmpty || phoneNumberInputField.text!.isEmpty || genderPicker.text!.isEmpty || pinInputField.text?.count != 4 {
+            createAccountButton.backgroundColor = .gray
+            valid = false
+            //Disable button
+        } else {
+            createAccountButton.backgroundColor = purpleColor
+            valid = true
+            print("Enabled")
+            //Enable button
+        }
+        if pinInputField.text?.count != 4{
+            validationLabel.text = "PIN must be 4 digits"
+            validationLabel.isHidden = false
+        }else{
+            validationLabel.isHidden = true
+        }
     }
     
     func createDatePicker(){
-        datePicker.preferredDatePickerStyle = .wheels // makes the datepicker wheel up which solves the problem of the date picker not having appropriate height
-        dateOfBirthInputField.textAlignment = .justified//aligns the text within the textField
-        datePicker.datePickerMode = .date // to only get the date without time involved
-        dateOfBirthInputField.inputView = datePicker // datePicker pops up but doesn't show in the whole screen
+        datePicker.preferredDatePickerStyle = .wheels
+        dateOfBirthInputField.textAlignment = .justified
+        datePicker.datePickerMode = .date
+        dateOfBirthInputField.inputView = datePicker
         dateOfBirthInputField.inputAccessoryView = createToolBar()
     }
     func createToolBar() -> UIToolbar {
@@ -66,10 +132,11 @@ class AccountSetUp: UIViewController{
         self.dateOfBirthInputField.text = dateFormatter.string(from: datePicker.date)
         self.view.endEditing(true) // makes the doneButton in the datePicker functional
     }
-  
+    
     lazy var setUpHeader: UILabel = {
         let label = UILabel()
         label.text = stringResources.setUpHeader
+        label.textAlignment = .center
         return label
     }()
     
@@ -118,6 +185,14 @@ class AccountSetUp: UIViewController{
         label.text = "Date of birth"
         return label
     }()
+    lazy var validationLabel: UILabel = {
+        let label = UILabel()
+        label.text = ""
+        label.textColor = .red
+        label.isHidden = true
+        return label
+    }()
+    
     lazy var dateOfBirthInputField: UITextField = {
         let textField = UITextField()
         let iv = UIView()
@@ -129,7 +204,18 @@ class AccountSetUp: UIViewController{
         textField.rightViewMode = .always
         return textField
     }()
-    
+    lazy var emailLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Email"
+        return label
+    }()
+    lazy var emailInputField: UITextField = {
+        let textField = UITextField()
+        textField.backgroundColor = grayColor
+        textField.layer.cornerRadius = 7
+        textField.textAlignment = .left
+        return textField
+    }()
     lazy var genderLabel: UILabel = {
         let label = UILabel()
         label.text = "Gender"
@@ -148,12 +234,27 @@ class AccountSetUp: UIViewController{
         
         return textField
     }()
+    
     lazy var phoneNumberLabel: UILabel = {
         let label = UILabel()
         label.text = "Phone Number"
         return label
     }()
     lazy var phoneNumberInputField: UITextField = {
+        let textField = UITextField()
+        textField.backgroundColor = grayColor
+        textField.layer.cornerRadius = 7
+        textField.textAlignment = .left
+        
+        return textField
+    }()
+    
+    lazy var pinLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Pin"
+        return label
+    }()
+    lazy var pinInputField: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = grayColor
         textField.layer.cornerRadius = 7
@@ -169,7 +270,7 @@ class AccountSetUp: UIViewController{
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .gray
         button.addTarget(self, action: #selector(beginTask), for: .touchUpInside)
-//
+        //
         return button
     }()
     
@@ -181,12 +282,17 @@ class AccountSetUp: UIViewController{
         return label
     }()
     @objc func beginTask(){
-        delegate?.begin(view: "profile")
-        print("Started")
+        if valid{
+            saveAccount()
+            delegate?.begin(view: "login")
+        }
+        else{
+            validationLabel.text = "All fields must be filled"
+        }
     }
-}// end class
+}
 
-extension AccountSetUp: UIPickerViewDelegate, UIPickerViewDataSource{
+extension AccountSetUpViewController: UIPickerViewDelegate, UIPickerViewDataSource{
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         1
     }
@@ -230,7 +336,7 @@ extension AccountSetUp: UIPickerViewDelegate, UIPickerViewDataSource{
         
         phoneNumberInputField.inputView = pickerView
         genderPicker.inputView = pickerView
-
+        
     }
     func dismissAndClose(){
         let toolbar = UIToolbar()
@@ -247,8 +353,6 @@ extension AccountSetUp: UIPickerViewDelegate, UIPickerViewDataSource{
     @objc func dismissAction(){
         self.view.endEditing(true)
     }
-  
-    
 }
 extension UIView{
     
@@ -261,9 +365,8 @@ extension UIView{
         imageView.image = image
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
-//        imageView.centerYAnchor.constraint(equalTo: container.centerYAnchor).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
-
+        
         container.addSubview(imageView)
         imageView.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
         return container
