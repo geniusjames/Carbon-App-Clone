@@ -10,6 +10,8 @@ import UIKit
 
 class AppCoordinator: createViewDelegate{
     let navigation = UINavigationController()
+    let onBoardedNavigation = UINavigationController()
+    var isOnBoarded: Bool = false
     func begin(view: String) {
         if view == "register"{
             setUpScreen()
@@ -28,27 +30,33 @@ class AppCoordinator: createViewDelegate{
         self.window = window
     }
     func start(){
-        onBoardingScreen()
+        isOnBoarded = UserDefaults.standard.bool(forKey: "onboarded")
+        if !isOnBoarded{
+            onBoardingScreen()
+
+        }else{
+            profileScreen()
+        }
+            
     }
     func onBoardingScreen(){
         
         let vc = OnBoardingViewController()
         navigation.pushViewController(vc, animated: true)
-//        let navigation = UINavigationController(rootViewController: vc)
         vc.delegate = self
-//        self.window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         self.window.backgroundColor = .white
         self.window.rootViewController = navigation
         self.window.makeKeyAndVisible()
     }
     func loginScreen(){
         let vc = LogInViewController()
+        vc.delegate = self
         navigation.pushViewController(vc, animated: true)
         window.rootViewController = navigation
         window.makeKeyAndVisible()
     }
     func setUpScreen(){
-        let vc = AccountSetUp()
+        let vc = AccountSetUpViewController()
         vc.delegate = self
         navigation.pushViewController(vc, animated: true)
 //        navigation.viewControllers = [vc]
@@ -59,11 +67,10 @@ class AppCoordinator: createViewDelegate{
     func profileScreen(){
         
         let vc = ProfileViewController()
-        navigation.pushViewController(vc, animated: true)
-        window.rootViewController = navigation
+        onBoardedNavigation.pushViewController(vc, animated: true)
+        vc.delegate = self
+        window.rootViewController = onBoardedNavigation
         window.makeKeyAndVisible()
     }
-    func makeViewController(controller: UIViewController) -> UIViewController{
-        return UIViewController()
-    }
 }
+

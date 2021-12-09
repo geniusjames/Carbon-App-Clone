@@ -8,14 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		B419CE8F275B95C800DE72A0 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B419CE8E275B95C800DE72A0 /* AppCoordinator.swift */; };
-		B419CE91275C633800DE72A0 /* AccountSetUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B419CE90275C633700DE72A0 /* AccountSetUp.swift */; };
-		B419CE93275CFD7D00DE72A0 /* CountryPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B419CE92275CFD7D00DE72A0 /* CountryPickerViewController.swift */; };
+		B419CE91275C633800DE72A0 /* AccountSetUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B419CE90275C633700DE72A0 /* AccountSetUpViewController.swift */; };
 		B419CE95275D519700DE72A0 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B419CE94275D519700DE72A0 /* ProfileViewController.swift */; };
 		B43474172754C24800BE05E5 /* OnBoardingScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43474162754C24800BE05E5 /* OnBoardingScreenView.swift */; };
 		B43474192754C4FE00BE05E5 /* StringsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43474182754C4FE00BE05E5 /* StringsFile.swift */; };
 		B434741B27559C6800BE05E5 /* OnBoardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B434741A27559C6800BE05E5 /* OnBoardingCollectionViewCell.swift */; };
 		B434741D27563E7C00BE05E5 /* onBoardingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B434741C27563E7C00BE05E5 /* onBoardingModel.swift */; };
 		B434741F2757736700BE05E5 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B434741E2757736700BE05E5 /* LogInViewController.swift */; };
+		B47EAA1F276101EF000CDE34 /* ProfileViewControllerConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47EAA1E276101EF000CDE34 /* ProfileViewControllerConstraints.swift */; };
 		B493940527539F560082C630 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B493940427539F560082C630 /* AppDelegate.swift */; };
 		B493940727539F560082C630 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B493940627539F560082C630 /* SceneDelegate.swift */; };
 		B493940927539F560082C630 /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B493940827539F560082C630 /* OnBoardingViewController.swift */; };
@@ -46,14 +46,14 @@
 
 /* Begin PBXFileReference section */
 		B419CE8E275B95C800DE72A0 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
-		B419CE90275C633700DE72A0 /* AccountSetUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSetUp.swift; sourceTree = "<group>"; };
-		B419CE92275CFD7D00DE72A0 /* CountryPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryPickerViewController.swift; sourceTree = "<group>"; };
+		B419CE90275C633700DE72A0 /* AccountSetUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSetUpViewController.swift; sourceTree = "<group>"; };
 		B419CE94275D519700DE72A0 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		B43474162754C24800BE05E5 /* OnBoardingScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingScreenView.swift; sourceTree = "<group>"; };
 		B43474182754C4FE00BE05E5 /* StringsFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringsFile.swift; sourceTree = "<group>"; };
 		B434741A27559C6800BE05E5 /* OnBoardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingCollectionViewCell.swift; sourceTree = "<group>"; };
 		B434741C27563E7C00BE05E5 /* onBoardingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onBoardingModel.swift; sourceTree = "<group>"; };
 		B434741E2757736700BE05E5 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		B47EAA1E276101EF000CDE34 /* ProfileViewControllerConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerConstraints.swift; sourceTree = "<group>"; };
 		B493940127539F560082C630 /* CarbonMockApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarbonMockApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B493940427539F560082C630 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B493940627539F560082C630 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -94,12 +94,49 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B49393F827539F550082C630 = {
+		B47EAA1D2761019D000CDE34 /* Constraints */ = {
+			isa = PBXGroup;
+			children = (
+				B4A87550276008EE0053D53C /* AccountSetupConstraints.swift */,
+				B47EAA1E276101EF000CDE34 /* ProfileViewControllerConstraints.swift */,
+			);
+			path = Constraints;
+			sourceTree = "<group>";
+		};
+		B47EAA202761026C000CDE34 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				B434741E2757736700BE05E5 /* LogInViewController.swift */,
+				B419CE94275D519700DE72A0 /* ProfileViewController.swift */,
 				B434741A27559C6800BE05E5 /* OnBoardingCollectionViewCell.swift */,
+				B419CE90275C633700DE72A0 /* AccountSetUpViewController.swift */,
+				B493940827539F560082C630 /* OnBoardingViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		B47EAA21276102A5000CDE34 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B43474182754C4FE00BE05E5 /* StringsFile.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		B47EAA22276102E0000CDE34 /* Model */ = {
+			isa = PBXGroup;
+			children = (
 				B434741C27563E7C00BE05E5 /* onBoardingModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B49393F827539F550082C630 = {
+			isa = PBXGroup;
+			children = (
+				B47EAA22276102E0000CDE34 /* Model */,
+				B47EAA21276102A5000CDE34 /* Resources */,
+				B47EAA202761026C000CDE34 /* Controllers */,
 				B493940327539F560082C630 /* CarbonMockApp */,
 				B493941A27539F5A0082C630 /* CarbonMockAppTests */,
 				B493942427539F5A0082C630 /* CarbonMockAppUITests */,
@@ -123,13 +160,8 @@
 				B493940427539F560082C630 /* AppDelegate.swift */,
 				B493940627539F560082C630 /* SceneDelegate.swift */,
 				B419CE8E275B95C800DE72A0 /* AppCoordinator.swift */,
-				B419CE94275D519700DE72A0 /* ProfileViewController.swift */,
-				B419CE90275C633700DE72A0 /* AccountSetUp.swift */,
-				B4A87550276008EE0053D53C /* AccountSetupConstraints.swift */,
-				B419CE92275CFD7D00DE72A0 /* CountryPickerViewController.swift */,
-				B493940827539F560082C630 /* OnBoardingViewController.swift */,
+				B47EAA1D2761019D000CDE34 /* Constraints */,
 				B43474162754C24800BE05E5 /* OnBoardingScreenView.swift */,
-				B43474182754C4FE00BE05E5 /* StringsFile.swift */,
 				B493940D27539F590082C630 /* Assets.xcassets */,
 				B493940F27539F590082C630 /* LaunchScreen.storyboard */,
 				B493941227539F590082C630 /* Info.plist */,
@@ -285,15 +317,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				B43474192754C4FE00BE05E5 /* StringsFile.swift in Sources */,
-				B419CE93275CFD7D00DE72A0 /* CountryPickerViewController.swift in Sources */,
 				B493940927539F560082C630 /* OnBoardingViewController.swift in Sources */,
 				B493940527539F560082C630 /* AppDelegate.swift in Sources */,
 				B434741B27559C6800BE05E5 /* OnBoardingCollectionViewCell.swift in Sources */,
-				B419CE91275C633800DE72A0 /* AccountSetUp.swift in Sources */,
+				B419CE91275C633800DE72A0 /* AccountSetUpViewController.swift in Sources */,
 				B4A87551276008EE0053D53C /* AccountSetupConstraints.swift in Sources */,
 				B419CE95275D519700DE72A0 /* ProfileViewController.swift in Sources */,
 				B434741F2757736700BE05E5 /* LogInViewController.swift in Sources */,
 				B434741D27563E7C00BE05E5 /* onBoardingModel.swift in Sources */,
+				B47EAA1F276101EF000CDE34 /* ProfileViewControllerConstraints.swift in Sources */,
 				B419CE8F275B95C800DE72A0 /* AppCoordinator.swift in Sources */,
 				B493940727539F560082C630 /* SceneDelegate.swift in Sources */,
 				B43474172754C24800BE05E5 /* OnBoardingScreenView.swift in Sources */,
